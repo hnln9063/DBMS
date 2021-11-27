@@ -1,0 +1,221 @@
+		----------| BANKING SYSTEM |--------------
+
+----------| Creating a branch table |------------
+
+SQL> create table branch (bname varchar2(20) primary key, bcity varchar2(20) not null, assets number(10));
+
+Table created.
+
+SQL> desc branch;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BNAME                                     NOT NULL VARCHAR2(20)
+ BCITY                                     NOT NULL VARCHAR2(20)
+ ASSETS                                             NUMBER(10)
+
+---------| Inseting values into table |------------------
+
+SQL> insert into branch values ('&bname','&bcity','&assets');
+Enter value for bname: SBI_HDP
+Enter value for bcity: Hindupur
+Enter value for assets: 100000000
+old   1: insert into branch values ('&bname','&bcity','&assets')
+new   1: insert into branch values ('SBI_HDP','Hindupur','100000000')
+
+1 row created.
+
+SQL> select * from branch;
+
+BNAME                BCITY                    ASSETS
+-------------------- -------------------- ----------
+SBI_HDP              Hindupur              100000000
+SBI_KNL              Kurnool               900000000
+SBI_ATP              Anantapur            8000000000
+ICICI_KDP            Kadapa               4500560000
+ICICI_DMM            Dharmavaram          9080652030
+ICICI_MDKS           Madakasira           8050660908
+
+---------------| Creating an account table |----------------------
+
+SQL> create table account (accno varchar2(13) primary key, bname varchar2(20) not null, foreign key (bname) references branch, balance number(10));
+
+SQL> desc account;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ACCNO                                     NOT NULL VARCHAR2(13)
+ BNAME                                     NOT NULL VARCHAR2(25)
+ BALANCE                                            NUMBER(10)
+
+--------------| Inserting values into account table |------------------
+
+SQL> insert into account values ('&accno','&bname','&balance');
+Enter value for accno: SBIXXXXXX4563
+Enter value for bname: SBI_HDP
+Enter value for balance: 50000
+old   1: insert into account values ('&accno','&bname','&balance')
+new   1: insert into account values ('SBIXXXXXX4563','SBI_HDP','50000')
+
+1 row created.
+
+SQL> select * from account;
+
+ACCNO         BNAME                        BALANCE
+------------- ------------------------- ----------
+SBIXXXXXX4563 SBI_HDP                        50000
+SBIXXXXXX7896 SBI_HDP                        85000
+SBIXXXXXX8521 SBI_KNL                        90000
+SBIXXXXXX9513 SBI_KNL                        75203
+SBIXXXXXX9638 SBI_ATP                         4000
+SBIXXXXXX8624 SBI_ATP                       956321
+ICICIXXXX8523 ICICI_KDP                      95632
+ICICIXXXX7539 ICICI_KDP                      45000
+ICICIXXXX8562 ICICI_DMM                      84520
+ICICIXXXX7856 ICICI_DMM                      45620
+ICICIXXXX8561 ICICI_MDKS                      7895
+ICICIXXXX7516 ICICI_MDKS                    785965
+
+12 rows selected.
+
+----------------| Creating a loan table |-------------------------
+
+SQL> create table loan (lno varchar2(10) primary key, bname varchar2(20) not null, foreign key (bname) references branch, amount number(10));
+
+Table created.
+
+SQL> desc loan;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LNO                                       NOT NULL VARCHAR2(10)
+ BNAME                                     NOT NULL VARCHAR2(20)
+ AMOUNT                                             NUMBER(10)
+
+--------------| Inserting values into loan table |---------------
+
+SQL> insert into loan values ('&lno','&bname','&amount');
+Enter value for lno: LOAN000001
+Enter value for bname: SBI_HDP
+Enter value for amount: 450000
+old   1: insert into loan values ('&lno','&bname','&amount')
+new   1: insert into loan values ('LOAN000001','SBI_HDP','450000')
+
+1 row created.
+
+SQL> select * from loan;
+
+LNO        BNAME                    AMOUNT
+---------- -------------------- ----------
+LOAN000001 SBI_HDP                  450000
+LOAN000002 SBI_KNL                 8500000
+LOAN000003 SBI_ATP                  785200
+LOAN000004 ICICI_KDP               7859600
+LOAN000005 ICICI_DMM               8569320
+LOAN000006 ICICI_MDKS              8500000
+
+6 rows selected.
+
+--------------| Creating a customer table |-----------------
+
+SQL> create table customer (cname varchar2(20) primary key, cstreet varchar2(20) not null, ccity varchar2(20) not null);
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CNAME                                     NOT NULL VARCHAR2(20)
+ CSTREET                                   NOT NULL VARCHAR2(20)
+ CCITY                                     NOT NULL VARCHAR2(20)
+
+--------------| Inserting values into customer table |-------------------
+
+SQL> insert into customer values ('&cname','&cstreet','&ccity');
+Enter value for cname: Narasimha
+Enter value for cstreet: Melapuram
+Enter value for ccity: Hindupur
+old   1: insert into customer values ('&cname','&cstreet','&ccity')
+new   1: insert into customer values ('Narasimha','Melapuram','Hindupur')
+
+1 row created.
+
+SQL> select * from customer;
+
+CNAME                CSTREET              CCITY
+-------------------- -------------------- --------------------
+Narasimha            Melapuram            Hindupur
+Rajsekhar            Balaji Nagar         Kadapa
+Vamsi                RC colony            Kurnool
+Bharani              Sai Nagar            Anantapur
+Madheshwar           Penukonda            Dharmavaram
+Naveen               Lakshmi Nagar        Madakasira
+
+6 rows selected.
+
+------------------| Creating a depositor table |----------------
+
+SQL> create table depositor (cname varchar2(20) not null, accno varchar2(13) not null, foreign key (cname) references customer, foreign key (accno) references account);
+
+Table created.
+
+SQL> desc depositor
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CNAME                                     NOT NULL VARCHAR2(20)
+ ACCNO                                     NOT NULL VARCHAR2(13)
+
+---------------| Inserting values into depostior table |-------------
+
+SQL> insert into depositor values ('&cname','&accno');
+Enter value for cname: Narasimha
+Enter value for accno: SBIXXXXXX4563
+old   1: insert into depositor values ('&cname','&accno')
+new   1: insert into depositor values ('Narasimha','SBIXXXXXX4563')
+
+1 row created.
+
+SQL> select * from depositor;
+
+CNAME                ACCNO
+-------------------- -------------
+Narasimha            SBIXXXXXX4563
+Rajsekhar            ICICIXXXX8523
+Vamsi                SBIXXXXXX8521
+Bharani              SBIXXXXXX8624
+Madheshwar           ICICIXXXX7516
+Naveen               ICICIXXXX7516
+
+6 rows selected.
+
+------------| Creating a borrower table |----------------
+
+SQL> create table borrower (cname varchar2(20) not null, lno varchar2(10) unique, foreign key (cname) references customer, foreign key (lno) references loan);
+
+Table created.
+
+SQL> desc borrower;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CNAME                                     NOT NULL VARCHAR2(20)
+ LNO                                                VARCHAR2(10)
+
+-------------| Inserting values into borrower table |--------------
+
+SQL> insert into borrower values ('&cname','&lno');
+Enter value for cname: Narasimha
+Enter value for lno: LOAN000001
+old   1: insert into borrower values ('&cname','&lno')
+new   1: insert into borrower values ('Narasimha','LOAN000001')
+
+1 row created.
+
+SQL> select * from borrower;
+
+CNAME                LNO
+-------------------- ----------
+Narasimha            LOAN000001
+Rajsekhar            LOAN000002
+Vamsi                LOAN000003
+Bharani              LOAN000004
+Madheshwar           LOAN000005
+Naveen               LOAN000006
+
+6 rows selected.

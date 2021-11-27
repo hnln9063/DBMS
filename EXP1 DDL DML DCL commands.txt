@@ -1,0 +1,153 @@
+
+
+			Data Definition Language (DDL) COMMANDS
+			---------------------------------------
+
+	CREATING A TABLE
+	----------------
+
+SQL> create table employee592(eid varchar2(10), ename varchar2(20), esalary number(10));
+
+Table created.
+
+SQL> desc employee592;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EID                                                VARCHAR2(10)
+ ENAME                                              VARCHAR2(20)
+ ESALARY                                            NUMBER(10)
+
+
+	ALTER A TABLE
+	-------------
+
+---> TO ADD A ROW
+
+SQL> alter table employee592 add(ephone number(10));
+
+Table altered.
+
+--> TO MODIFY ROW SIZE
+
+SQL> alter table employee592 modify(ename varchar2(25));
+
+Table altered.
+
+--> TO DROP A ROW
+
+SQL> alter table employee592 drop(esalary);
+
+Table altered.
+
+--> After altering a table
+
+SQL> desc employee592
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EID                                                VARCHAR2(10)
+ ENAME                                              VARCHAR2(25)
+ EPHONE                                             NUMBER(10)
+
+SQL> commit;
+
+Commit complete.
+
+	DROP A TABLE
+	------------
+
+SQL> drop table employee592;
+
+ Table dropped.
+
+	TRUNCATE A TABLE
+	----------------
+
+SQL> truncate table employee592;
+
+Table truncated.
+
+
+
+			Data Manipulation Language (DML) COMMANDS
+			----------------------------------------
+
+	INSERT INTO
+	-----------
+
+SQL> insert into employee592 values('&eid','&ename',&ephone);
+Enter value for eid: 209X1A0592
+Enter value for ename: Lakshmi Narasimha
+Enter value for ephone: 9063400455
+old   1: insert into employee592 values('&eid','&ename',&ephone)
+new   1: insert into employee592 values('209X1A0592','Lakshmi Narasimha',9063400455)
+
+1 row created.
+
+	SELECT 
+	------
+SQL> select * from employee592;
+
+EID        ENAME                         EPHONE
+---------- ------------------------- ----------
+209X1A0592 Lakshmi Narasimha         9063400455
+
+--> To select a particular row
+
+SQL> select ename from employee592;
+
+ENAME
+------------------------
+Lakshmi Narasimha
+
+--> To select multiple columns
+
+SQL> select ename,eid from employee592
+
+ENAME	    		 EID
+-----------------------  ----------
+Lakshmi Narasimha	 209X1A0592
+
+
+	UPDATE
+	------
+
+SQL> update employee592 set ephone = 9441270596 where ename='Lakshmi Narasimha';
+
+1 row updated.
+
+updated result
+
+EID        ENAME                         EPHONE
+---------- ------------------------- ----------
+209X1A0592 Lakshmi Narasimha         9441270596
+
+
+	DELETE
+	------
+SQL> delete from employee592 where ephone = 9441270596;
+
+1 row deleted.
+
+EID        ENAME                         EPHONE
+---------- ------------------------- ----------
+209X1A0597 Madheshwar                8050602010
+
+
+
+			Data Control Language (DCL) COMMANDS
+			------------------------------
+
+	COMMIT
+	------
+SQL> commit;
+
+Commit complete.
+
+#This is used to save a table
+
+
+
+
+
+
+

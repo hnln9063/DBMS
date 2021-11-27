@@ -1,0 +1,165 @@
+
+		=============== UNIVERSITY SYSTEM ===================
+
+
+************************* Creating a Department Table ********************
+
+SQL> create table department (dept_id varchar2(10) primary key, dept_name varchar2(40) not null, dept_loc varchar2(20));
+
+SQL> desc department;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID                                   NOT NULL VARCHAR2(10)
+ DEPT_NAME                                 NOT NULL VARCHAR2(40)
+ DEPT_LOC                                           VARCHAR2(20)
+
+// inserting department values in department table
+
+SQL> insert into department values ('&dept_id','&dept_name','&dept_loc');
+Enter value for dept_id: CS209X1A05
+Enter value for dept_name: Computer science Engineering
+Enter value for dept_loc: Silver jublee block
+old   1: insert into department values ('&dept_id','&dept_name','&dept_loc')
+new   1: insert into department values ('CS209X1A05','Computer science Engineering','Silver jublee b
+
+1 row created.
+
+####################### DEPARTMENT TABLE #######################
+
+SQL> select * from department;
+
+DEPT_ID    DEPT_NAME                                DEPT_LOC
+---------- ---------------------------------------- --------------------
+CS209X1A05 Computer science Engineering             Silver jublee block
+EC209X1A04 Electronic Communication Engineering     ECE block
+CT209X1A28 Computer Science and Technology          CSE block 2
+ME209X1A03 Mechanical Engineering                   ME block 1
+CE209X1A01 Civil Engineering                        CE block
+
+********************** Creating studentt92 table *************************
+ 
+SQL> create table studentt92 (sid varchar2(10) primary key, sname varchar2(25) not null, sdob date, dept_id varchar2(10), foreign key (dept_id) references department);
+
+
+SQL> desc studentt92;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL VARCHAR2(10)
+ SNAME                                     NOT NULL VARCHAR2(25)
+ SDOB                                               DATE
+ DEPT_ID                                            VARCHAR2(10)
+
+// Inserting student values in studentt92 table
+
+SQL> insert into studentt92 values ('&sid','&sname','&sdob','&dept_id');
+Enter value for sid: 209X1A0590
+Enter value for sname: Vamsi Sajjan
+Enter value for sdob: 24-Sep-2002
+Enter value for dept_id: CS209X1A05
+old   1: insert into studentt92 values ('&sid','&sname','&sdob','&dept_id')
+new   1: insert into studentt92 values ('209X1A0590','Vamsi Sajjan','24-Sep-2002','CS209X1A05')
+
+1 row created.
+
+######################## STUDENTT92 TABLE ###########################
+
+SQL> select * from studentt92;
+
+SID        SNAME                     SDOB      DEPT_ID
+---------- ------------------------- --------- ----------
+209X1A0590 Vamsi Sajjan              24-SEP-02 CS209X1A05
+209X1A0591 Rajsekhar                 04-JAN-02 CS209X1A05
+209X1A0493 Jagadeesh                 30-OCT-03 EC209X1A04
+209X1A0192 Rajeev                    15-OCT-02 CE209X1A01
+209X1A0492 Rahul                     25-AUG-03 EC209X1A04
+209X1A0195 Virat                     23-MAR-02 CE209X1A01
+209X1A2826 Sumanth                   05-FEB-01 CT209X1A28
+209X1A2823 Vikas                     09-APR-03 CT209X1A28
+209X1A0349 Tharun                    11-MAY-02 ME209X1A03
+209X1A0350 Varun                     06-JUL-03 ME209X1A03
+
+10 rows selected.
+
+************************** creating course table ************************
+
+SQL> create table course (cid varchar2(10) primary key, cname varchar2(25) not null, cduration varchar2(20) not null, dept_id varchar2(10) not null, foreign key (dept_id) references department);
+
+SQL> desc course;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CID                                       NOT NULL VARCHAR2(10)
+ CNAME                                     NOT NULL VARCHAR2(25)
+ CDURATION                                 NOT NULL VARCHAR2(20)
+ DEPT_ID                                   NOT NULL VARCHAR2(10)
+
+// Inseting Course values in course table
+
+SQL> insert into course values ('&cid','&cname','&cduration','&dept_id');
+Enter value for cid: JavaDev001
+Enter value for cname: Java for students
+Enter value for cduration: 8 weeks
+Enter value for dept_id: CT209X1A28
+old   1: insert into course values ('&cid','&cname','&cduration','&dept_id')
+new   1: insert into course values ('JavaDev001','Java for students','8 weeks','CT209X1A28')
+
+1 row created.
+
+####################### COURSE TABLE #######################
+
+SQL> select * from course;
+
+CID        CNAME                     CDURATION            DEPT_ID
+---------- ------------------------- -------------------- ----------
+MacLear001 Machine Learning          6 weeks              CS209X1A05
+ArtInte001 Artificial Intelligence   6 weeks              EC209X1A04
+PythonL001 Basic Python              6 weeks              CE209X1A01
+JavaDev001 Java for students         8 weeks              CT209X1A28
+
+********************** creating result table *************************
+
+SQL> create table result (res_id varchar2(10) primary key, sid varchar2(10), bid varchar2(10), marks number(3) check (marks <= 100), foreign key (sid) references studentt92, foreign key (bid) references course);
+
+SQL> desc result;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ RES_ID                                    NOT NULL VARCHAR2(10)
+ SID                                                VARCHAR2(10)
+ BID                                                VARCHAR2(10)
+ MARKS                                              NUMBER(3)
+
+// Inserting Result Values in Result table
+
+SQL>  insert into result values ('&res_id','&sid','&cid','&marks');
+Enter value for res_id: resultX004
+Enter value for sid: 209X1A0192
+Enter value for cid: PythonL001
+Enter value for marks: 85
+old   1:  insert into result values ('&res_id','&sid','&cid','&marks')
+new   1:  insert into result values ('resultX004','209X1A0192','PythonL001','85')
+
+1 row created.
+
+############################ RESULT TABLE ############################
+
+SQL> select * from result;
+
+RES_ID     SID        BID             MARKS
+---------- ---------- ---------- ----------
+resultX001 209X1A0590 MacLear001         92
+resultX002 209X1A0591 MacLear001         94
+resultX003 209X1A0493 ArtInte001         89
+resultX004 209X1A0192 PythonL001         85
+resultX005 209X1A0492 ArtInte001         75
+resultX006 209X1A0195 PythonL001         96
+resultX007 209X1A2826 MacLear001         95
+resultX009 209X1A2823 MacLear001         59
+resultX010 209X1A0349 JavaDev001         72
+resultX011 209X1A0350 JavaDev001         69
+
+10 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+

@@ -1,0 +1,110 @@
+
+				CONSTRAINTS:
+				------------
+
+--> NOT NULL
+--> UNIQUE
+--> CHECK
+--> PRIMARY KEY
+--> FOREIGN KEY
+
+			SYNTAX:
+			-------
+create table tablename (field datatype not null);
+
+create table tablename (field datatpye unique);
+
+create table tablename (field datatype check(condition));
+
+Example:
+--------
+create table employee (eid varchar2(10) unique, ename varchar2(20) not null, esalary  number (10) check (esalary > 0));
+
+		PRIMARY AND FOREIGN KEY
+		-----------------------
+create table branch (bid varchar2(5), bname varchar2(15), blocation varchar2(15), primary key(bid));
+
+create table student (sid varchar2(10), sname varchar2(20), sdob date, bid varchar(5), primary key (sid), foreign key (bid) references branch);
+
+	**********************************************************************
+	
+		CREATING A BRANCH TABLE
+		-----------------------
+SQL> create table branch92 (bid varchar2(5) not null, bname varchar2(20) not null, blocation varchar2(15), primary key (bid));
+
+Table created.
+
+SQL> desc branch92;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BID                                       NOT NULL VARCHAR2(5)
+ BNAME                                     NOT NULL VARCHAR2(20)
+ BLOCATION                                          VARCHAR2(15)
+
+		CREATING A STUDENT TABLE
+		------------------------
+SQL> create table student2 (sid varchar2(10), sname varchar2(20), sdob date, bid varchar(5), strans varchar2(10) unique, sbalance number(10) check (sbalance > 0), primary key (sid), foreign key (bid) references branch92);
+
+Table created.
+
+SQL> desc student2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL VARCHAR2(10)
+ SNAME                                              VARCHAR2(20)
+ SDOB                                               DATE
+ BID                                                VARCHAR2(5)
+ STRANS                                             VARCHAR2(10)
+ SBALANCE					    NUMBER(10)
+
+	
+		INSERTING DETAILS OF THE BRANCH
+		-------------------------------
+
+SQL>  insert into branch92 values ('&bid', '&bname', '&blocation');
+Enter value for bid: SBI02
+Enter value for bname: SBIA
+Enter value for blocation: Anantapur
+old   1:  insert into branch92 values ('&bid', '&bname', '&blocation')
+new   1:  insert into branch92 values ('SBI02', 'SBIA', 'Anantapur')	
+
+1 row created.
+
+## After inserting 3 branches ##
+--------------------------------
+
+SQL> select * from branch92;
+
+BID   BNAME                BLOCATION
+----- -------------------- ---------------
+SBI01 SBIH                 Hindupur
+SBI02 SBIA                 Anantapur
+SBI03 SBIK                 Kurnool
+
+		INSERTING DETAILS OF THE STUDENT
+		--------------------------------
+
+SQL> insert into student2 values ('&sid', '&sname', '&sdob', '&bid', '&strans', &sbalance);
+Enter value for sid: 209X1A0592
+Enter value for sname: HN Lakshmi Narasimha
+Enter value for sdob: 15-Aug-2002
+Enter value for bid: SBI01
+Enter value for strans: ID12546821
+Enter value for sbalance: 45000
+old   1: insert into student2 values ('&sid', '&sname', '&sdob', '&bid', '&strans', &sbalance)
+new   1: insert into student2 values ('209X1A0592', 'HN Lakshmi Narasimha', '15-Aug-2002', 'SBI01', 'ID12546821', 45000)
+
+1 row created.
+		
+## After inserting details of students ##
+-----------------------------------------
+
+SQL> select * from student2;
+
+SID        SNAME                SDOB      BID   STRANS       SBALANCE
+---------- -------------------- --------- ----- ---------- ----------
+209X1A0592 HN Lakshmi Narasimha 15-AUG-02 SBI01 ID12546821      45000
+209X1A0591 Rajsekhar            04-JAN-03 SBI03 ID78945632      85000
+209X1A0598 Bharani Kumar        18-AUG-03 SBI03 ID96385274      60000
+209X1A0599 Vamsi Krishna        18-FEB-02 SBI02 ID45678912      78000
+

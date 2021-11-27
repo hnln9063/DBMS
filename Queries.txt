@@ -1,0 +1,60 @@
+
+	---------| QUERIES |----------
+
+
+------| SELECT |------
+
+  SYNTAX
+  ======
+// To display all talbe values.
+
+-> select * from table_name;
+
+// To display multiple columns.
+
+-> select c1,c2,c3 from table_name;
+
+// Arithmetic operations can be performed to columns if necessary.
+
+--> select ename,eoldsal,enewsal*1.5 from table_name;
+
+-------| DISTINCT |-------
+
+--> select distinct C1 from table_name;
+
+*************************************
+
+WHERE CLASS:
+
+// For including a condition.
+
+--> Retrive all loan numbers from SBI_HDP branch.
+A) select lno from loan where bname = 'SBI_HDP';
+
+****************************************************************
+****************************************************************
+****************************************************************
+
+-------------| JOIN |-------------------
+
+SQL> select studentt92.sid, studentt92.dept_id from studentt92 join department on studentt92.dept_id = department.dept_id;
+
+SID        DEPT_ID
+---------- ----------
+209X1A0590 CS209X1A05
+209X1A0591 CS209X1A05
+209X1A0493 EC209X1A04
+209X1A0192 CE209X1A01
+209X1A0492 EC209X1A04
+209X1A0195 CE209X1A01
+209X1A2826 CT209X1A28
+209X1A2823 CT209X1A28
+209X1A0349 ME209X1A03
+209X1A0350 ME209X1A03
+
+10 rows selected.
+
+
+
+
+

@@ -1,0 +1,130 @@
+
+	================== LIBRARY SYSTEM ====================
+
+*********************** Creating a student table ****************************
+
+SQL> create table student (sid varchar2(10) primary key, sname varchar2(25) not null,sphone number(10) not null);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL VARCHAR2(10)
+ SNAME                                     NOT NULL VARCHAR2(25)
+ SPHONE                                    NOT NULL NUMBER(10)
+
+//Inserting values
+
+SQL> insert into student values ('&sid','&sname','&sphone');
+Enter value for sid: 209X1A0592
+Enter value for sname: HN Lakshmi Narasimha
+Enter value for sphone: 9063400455
+old   1: insert into student values ('&sid','&sname','&sphone')
+new   1: insert into student values ('209X1A0592','HN Lakshmi Narasimha','9063400455')
+
+1 row created.
+
+####################### STUDENT TABLE ####################
+
+SQL> select * from student;
+
+SID        SNAME                         SPHONE
+---------- ------------------------- ----------
+209X1A0592 HN Lakshmi Narasimha      9063400455
+209X1A0591 Rajsekhar                 9060308050
+209X1A0593 Prem                      7080904050
+209X1A0594 Karthik                   8090506040
+209X1A0597 Madheswar                 9060308050
+209X1A0598 Bharani Kumar             9080506020
+209X1A0599 Vamsi Krishna             9010307050
+
+7 rows selected.
+
+************************ Creating books table *********************************
+
+SQL> create table books (bid varchar2(10) primary key, bname varchar2(25) not null, bcost number(6) 
+not null);
+
+Table created.
+
+SQL> desc books;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BID                                       NOT NULL VARCHAR2(10)
+ BNAME                                     NOT NULL VARCHAR2(25)
+ BCOST                                     NOT NULL NUMBER(6)
+
+// Inserting values
+
+SQL> insert into books values ('&bid','&bname','&bcost');
+Enter value for bid: abcd123456
+Enter value for bname: Wings of fire
+Enter value for bcost: 150
+old   1: insert into books values ('&bid','&bname','&bcost')
+new   1: insert into books values ('abcd123456','Wings of fire','150')
+
+1 row created.
+
+######################### BOOKS TABLE ########################
+
+SQL> select * from books;
+
+BID        BNAME                          BCOST
+---------- ------------------------- ----------
+abcd123456 Wings of fire                    150
+abcd123455 success manthra                  100
+abcd000001 Begineers JAVA                   200
+abcd000002 C programming                    150
+abcd000003 Basic C++                        149
+abcd000004 Python Programming               100
+abcd000005 DBMS using Python                160
+
+7 rows selected.
+
+
+*********************** Creating transaction table ************************
+
+SQL> create table trans (tid varchar2(10) primary key, sid varchar2(10), bid varchar2(10), doi date,
+foreign key (sid) references student, foreign key (bid) references books);
+
+Table created.
+
+SQL> desc trans;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TID                                       NOT NULL VARCHAR2(10)
+ SID                                                VARCHAR2(10)
+ BID                                                VARCHAR2(10)
+ DOI                                                DATE
+
+// Inserting values
+
+SQL> insert into trans values ('&tid','&sid','&bid','&doi');
+Enter value for tid: 12345
+Enter value for sid: 209X1A0592
+Enter value for bid: abcd123456
+Enter value for doi: 01-Nov-2021
+old   1: insert into trans values ('&tid','&sid','&bid','&doi')
+new   1: insert into trans values ('12345','209X1A0592','abcd123456','01-Nov-2021')
+
+1 row created.
+
+######################## TRANS TABLE #####################
+
+SQL> select * from trans;
+
+TID        SID        BID        DOI
+---------- ---------- ---------- ---------
+12345      209X1A0592 abcd123456 01-NOV-21
+12344      209X1A0591 abcd123455 02-NOV-21
+12346      209X1A0593 abcd000004 01-NOV-21
+12347      209X1A0594 abcd000001 30-OCT-21
+12348      209X1A0597 abcd000002 03-NOV-21
+12349      209X1A0598 abcd000003 29-OCT-21
+12350      209X1A0599 abcd000005 28-OCT-21
+
+7 rows selected.
+
+
+ 
