@@ -1,0 +1,155 @@
+
+ 	-------------| ASSIGNMENT - 1 : JOIN COMMANDS |--------------
+
+JOIN COMMANDS :
+--------------
+
+	Join in DBMS is a binary operation which allows us to combine, join products and selection in one single statement. The idea of creating a join condition is that it helps you to combine the data from two or more DBMS table.
+
+There are four types of join commands in SQL.
+1.INNER JOIN
+2.RIGHT JOIN
+3.LEFT JOIN
+4.FULL JOIN
+
+--------| CREATING A STUDENT TABLE |---------
+
+SQL> create table studentam (admission number(5) primary key, name varchar(15) not null, age number(3) not null, phno number(10) unique);
+
+Table created.
+
+SQL> desc studentam;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ADMISSION                                 NOT NULL NUMBER(5)
+ NAME                                      NOT NULL VARCHAR2(15)
+ AGE                                       NOT NULL NUMBER(3)
+ PHNO                                               NUMBER(10)
+
+--------| INSERTING VALUES INTO THE TABLE |----------
+
+SQL> insert into studentam values ('&admission','&name','&age','&number');
+Enter value for admission: 2560
+Enter value for name: Ravi Shankar
+Enter value for age: 18
+Enter value for number: 9060502030
+old   1: insert into studentam values ('&admission','&name','&age','&number')
+new   1: insert into studentam values ('2560','Ravi Shankar','18','9060502030')
+
+1 row created.
+
+SQL> SELECT * FROM STUDENTAM;
+
+ ADMISSION NAME                   AGE       PHNO
+---------- --------------- ---------- ----------
+      2560 Ravi Shankar            18 9060502030
+      2375 Hemanth                 17 9080705060
+      3100 Uma                     17 8050602030
+      3215 Rajsekhar               19 7098560305
+      3125 Jadeja                  18 8030205020
+
+---------| CREATING FEE TABLE |-----------
+
+SQL> create table feeam (admission number(5) not null, course varchar2(15) not null, amount_paid num
+ber(10));
+
+Table created.
+
+SQL> desc feeam;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ADMISSION                                 NOT NULL NUMBER(5)
+ COURSE                                    NOT NULL VARCHAR2(15)
+ AMOUNT_PAID                                        NUMBER(10)
+
+--------| INSERTING VALUES INTO THE TABLE |-----------
+
+SQL> insert into feeam values ('&admission','&course','&amount_paid');
+Enter value for admission: 2560
+Enter value for course: AI
+Enter value for amount_paid: 5000
+old   1: insert into feeam values ('&admission','&course','&amount_paid')
+new   1: insert into feeam values ('2560','AI','5000')
+
+1 row created.
+
+SQL> SELECT * FROM FEEAM;
+
+ ADMISSION COURSE          AMOUNT_PAID
+---------- --------------- -----------
+      2560 AI                     5000
+      2375 ML                     5000
+      3100 Data Science           7000
+      3526 IOT                    4000
+      3695 Python                 5000
+
+******** JOIN COMMANDS ********
+
+---| INNER JOIN |---
+
+	Inner join is used to return rows from both tables which satisfy the given condition. It is the most widely used join operator and we can be considered as a default join type.
+	An inner join or equi join is a comparator-based join which uses equality comparison in the join-predicate.
+
+Inner join furthr divided into 3 types :
+1] Theta join
+2] Natural join
+3] Equi join
+
+SQL> select studentam.admission, studentam.name, feeam.amount_paid from studentam inner join feeam on studentam.admission = feeam.admission;
+
+ ADMISSION NAME            AMOUNT_PAID
+---------- --------------- -----------
+      2560 Ravi Shankar           5000
+      2375 Hemanth                5000
+      3100 Uma                    7000
+
+---| OUTER JOIN |---
+
+Outer joins are divided into three types.
+
+[1] RIGHT JOIN :
+   -----------
+
+	Right join/ Right outer join returns all the columns from the table on the right, even if no matching rows have been found in the table on the left. When no matches have been found in the table on the left, NULL is returned.
+
+SQL> select studentam.admission, studentam.name, feeam.amount_paid from studentam right join feeam on studentam.admission = feeam.admission;
+
+ ADMISSION NAME            AMOUNT_PAID
+---------- --------------- -----------
+      2560 Ravi Shankar           5000
+      2375 Hemanth                5000
+      3100 Uma                    7000
+      NULL NULL                   4000
+      NULL NULL                   5000
+
+[2] LEFT JOIN :
+    ----------
+
+	Left join/Left outer join returns all the columns from the table on the left, even if no matching rows have been found in the table on the right. When no matching rows have found in the table on the right, NULL is returned.
+
+SQL> select studentam.admission, studentam.name, feeam.amount_paid from studentam left join feeam on studentam.admission = feeam.admission;
+
+ ADMISSION NAME            AMOUNT_PAID
+---------- --------------- -----------
+      2560 Ravi Shankar           5000
+      2375 Hemanth                5000
+      3100 Uma                    7000
+      3125 Jadeja                 NULL
+      3215 Rajsekhar              NULL
+
+[3] FULL JOIN :
+    ----------
+
+	In a full outer join, all tuples from both relations are included in the result irrespective of the matching condition.
+
+SQL> select studentam.admission, studentam.name, feeam.amount_paid from studentam full join feeam on studentam.admission = feeam.admission;
+
+ ADMISSION NAME            AMOUNT_PAID
+---------- --------------- -----------
+      2560 Ravi Shankar           5000
+      2375 Hemanth                5000
+      3100 Uma                    7000
+      3125 Jadeja                 NULL
+      3215 Rajsekhar              NULL
+      NULL NULL                   4000
+      NULL NULL                   5000

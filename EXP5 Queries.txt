@@ -1,0 +1,146 @@
+
+	----------| QUERIES |----------
+
+
+-------| SELECT CLAUSE |---------
+
+1] QUERY - Retrive all loan numbers from SBI_HDP brach.
+
+	SQL> select lno from loan where bname = 'SBI_HDP';
+
+	LNO
+	----------
+	LOAN000001
+
+2] QUERY - Retrive all loan numbers from SBI_KNL branch having loan amount greater than 20000.
+
+	SQL> select lno from loan where bname = 'SBI_KNL' and amount > 20000;
+
+	LNO
+	----------
+	LOAN000002
+
+----------| RANGE SERACH |----------
+
+1] QUERY - Retrive all the loan amount having amount between 500000 and 900000.
+
+	SQL> select lno,amount from loan where amount >= 500000 and amount <= 900000;
+
+	LNO            AMOUNT
+	---------- ----------
+	LOAN000003     785200
+	
+	SQL> select lno, amount from loan where amount between 500000 and 900000;
+
+	LNO            AMOUNT
+	---------- ----------
+	LOAN000003     785200
+
+----------| PATTERN MATCHING |----------
+
+--> We use like keyword.
+
+1] QUERY - Retrive all customer names starting with the letter N.
+
+	SQL> select cname from customer where cname like 'N%';
+
+	CNAME
+	--------------------
+	Narasimha
+	Naveen
+2] QUERY - Retrive all customer names who have letter r.
+
+	SQL> select cname from customer where cname like '%r%';
+
+	CNAME
+	--------------------
+	Bharani
+	Madheshwar
+	Narasimha
+	Rajsekhar
+
+----------| ORDER BY 'N' |-----------
+
+1] QUERY - Display all the account numbers and balance from low to high.
+
+SQL> select accno, balance from account order by balance ASC;
+
+ACCNO            BALANCE
+------------- ----------
+SBIXXXXXX9638       4000
+ICICIXXXX8561       7895
+ICICIXXXX7539      45000
+ICICIXXXX7856      45620
+SBIXXXXXX4563      50000
+SBIXXXXXX9513      75203
+ICICIXXXX8562      84520
+SBIXXXXXX7896      85000
+SBIXXXXXX8521      90000
+ICICIXXXX8523      95632
+ICICIXXXX7516     785965
+
+ACCNO            BALANCE
+------------- ----------
+SBIXXXXXX8624     956321
+
+12 rows selected.
+
+2] QUERY - Display all the account numbers and balance from high to low.
+
+SQL> select accno, balance from account order by balance DESC;
+
+ACCNO            BALANCE
+------------- ----------
+SBIXXXXXX8624     956321
+ICICIXXXX7516     785965
+ICICIXXXX8523      95632
+SBIXXXXXX8521      90000
+SBIXXXXXX7896      85000
+ICICIXXXX8562      84520
+SBIXXXXXX9513      75203
+SBIXXXXXX4563      50000
+ICICIXXXX7856      45620
+ICICIXXXX7539      45000
+ICICIXXXX8561       7895
+
+ACCNO            BALANCE
+------------- ----------
+SBIXXXXXX9638       4000
+
+12 rows selected.
+
+----------| GROUPING OF DATA |----------
+
+1] QUERY - Find all the average account balance at each branch by using group by operator.
+
+SQL> select bname,avg(balance) from account group by bname;
+
+BNAME                     AVG(BALANCE)
+------------------------- ------------
+SBI_ATP                       480160.5
+ICICI_KDP                        70316
+SBI_KNL                        82601.5
+ICICI_MDKS                      396930
+SBI_HDP                          67500
+ICICI_DMM                        65070
+
+6 rows selected.
+
+2] QUERY - Display average balance at each branch having avg greater than 80k.
+
+SQL> select bname, avg(balance) from account group by bname having avg(balance) > 80000;
+
+BNAME                     AVG(BALANCE)
+------------------------- ------------
+SBI_ATP                       480160.5
+SBI_KNL                        82601.5
+ICICI_MDKS                      396930
+
+
+
+
+
+
+
+
+

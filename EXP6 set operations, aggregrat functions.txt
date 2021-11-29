@@ -1,0 +1,90 @@
+
+------| SET OPERATIONS |------
+
+1] QUERY - Find all the customers having a loan or an account or both at the bank.
+
+SQL> select cname from depositor union select cname from borrower;
+
+CNAME
+--------------------
+Bharani
+Madheshwar
+Narasimha
+Naveen
+Rajsekhar
+Vamsi
+
+6 rows selected.
+
+2] QUERY - Find all the customers who have both loan and account at the bank.
+
+SQL> select cname from depositor intersect select cname from borrower;
+
+CNAME
+--------------------
+Bharani
+Madheshwar
+Narasimha
+Naveen
+Rajsekhar
+Vamsi
+
+6 rows selected.
+
+3] QUERY - Display customer.
+
+SQL> select cname from depositor minus select cname from borrower;
+
+no rows selected
+
+
+------| AGGREGATE FUNCTIONS |------
+
+SQL> select * from result;
+
+RES_ID     SID        BID             MARKS
+---------- ---------- ---------- ----------
+resultX001 209X1A0590 MacLear001         92
+resultX002 209X1A0591 MacLear001         94
+resultX003 209X1A0493 ArtInte001         89
+resultX004 209X1A0192 PythonL001         85
+resultX005 209X1A0492 ArtInte001         75
+resultX006 209X1A0195 PythonL001         96
+resultX007 209X1A2826 MacLear001         95
+resultX009 209X1A2823 MacLear001         59
+resultX010 209X1A0349 JavaDev001         72
+resultX011 209X1A0350 JavaDev001         69
+
+10 rows selected.
+
+1] To find average.
+
+	SQL> select avg(marks) from result;
+
+	AVG(MARKS)
+	----------
+	      82.6
+
+2] To find minimum.
+
+	SQL> select min(marks) from result;
+
+	MIN(MARKS)
+	----------
+        	59
+
+3] To find maximum.
+
+	SQL> select max(marks) from result;
+	
+	MAX(MARKS)
+	----------
+        	96
+
+4] To find sum.
+
+	SQL> select sum(marks) from result;
+
+	SUM(MARKS)
+	----------
+       	       826
